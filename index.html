@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Antor | Graphic Designer & Photographer</title>
+<meta name="description" content="Portfolio of Antor, a graphic designer and photographer. Logo and branding, social media design, banner design, business card design and more.">
+<meta property="og:title" content="Antor | Graphic Designer & Photographer">
+<meta property="og:description" content="Logos, brands and graphics people remember.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/logo-black.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Design tokens, reset, typography and buttons */
+:root{
+  --orange:#F45C08;
+  --black:#000;
+  --white:#fff;
+  --grey:#F1F1F1;
+  --font:"Outfit","Segoe UI",system-ui,sans-serif;
+  --ease:cubic-bezier(.76,0,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--font);font-size:1.0625rem;line-height:1.6;font-weight:400;
+  overflow:hidden;background:var(--white);color:var(--fg);
+  --fg:#000;--ctl:rgba(255,255,255,.85);
+  -webkit-font-smoothing:antialiased;
+}
+body[data-theme="white"],body[data-theme="grey"]{--fg:#000;--ctl:rgba(255,255,255,.85)}
+body[data-theme="black"]{--fg:#fff;--ctl:rgba(0,0,0,.8)}
+[hidden]{display:none!important}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+ul{list-style:none}
+:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+h1,h2,h3,h4{line-height:1.05;letter-spacing:-.02em}
+.muted{color:#555}
+
+.btn{
+  display:inline-block;text-decoration:none;font-weight:600;font-size:1rem;
+  padding:.85rem 1.6rem;border-radius:999px;border:2px solid transparent;
+  transition:transform .2s,background .2s,color .2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-orange{background:var(--orange);color:#000}
+.btn-black{background:#000;color:#fff}
+.btn-line{border-color:currentColor;background:transparent;color:inherit}
+
+@media (max-width:520px){ body{font-size:1rem} }
+@media (prefers-reduced-motion:reduce){ *{scroll-behavior:auto} }
+</style>
+<style>
+/* Top bar, slider track, slides and bottom controls */
+.bar{
+  position:fixed;top:0;left:0;right:0;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px clamp(20px,4vw,56px);pointer-events:none;
+}
+.bar > *{pointer-events:auto}
+.brand{display:block;line-height:0}
+.brand img{height:34px;width:auto}
+.brand .logo-w{display:none}
+body[data-theme="black"] .brand .logo-b{display:none}
+body[data-theme="black"] .brand .logo-w{display:block}
+.nav{display:flex;gap:clamp(12px,2.4vw,34px)}
+.nav a{
+  text-decoration:none;font-weight:500;font-size:.98rem;padding:.35rem 0;
+  border-bottom:3px solid transparent;transition:border-color .25s;
+}
+.nav a:hover{border-bottom-color:currentColor}
+.nav a[aria-current="page"]{border-bottom-color:var(--orange);font-weight:700}
+
+.viewport{position:fixed;inset:0;overflow:hidden}
+.track{display:flex;height:100%;transition:transform .85s var(--ease);will-change:transform}
+.slide{
+  flex:0 0 100%;height:100%;overflow-y:auto;overflow-x:hidden;
+  padding:clamp(84px,12vh,120px) clamp(20px,5vw,72px) 104px;
+  overscroll-behavior:contain;
+}
+.wrap{min-height:100%;max-width:1240px;margin:0 auto;display:flex;flex-direction:column;justify-content:center}
+.wrap--top{justify-content:flex-start}
+.s-home{background:var(--white);color:#000}
+.s-portfolio{background:var(--grey);color:#000}
+.s-services{background:var(--black);color:#fff}
+.s-about{background:var(--white);color:#000}
+
+.controls{
+  position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+  z-index:20;display:flex;align-items:center;gap:14px;
+  padding:6px 12px;border-radius:999px;background:var(--ctl);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.arrow{
+  width:44px;height:44px;border-radius:50%;border:2px solid currentColor;background:transparent;
+  display:grid;place-items:center;transition:opacity .25s,transform .2s,background .2s,color .2s;
+}
+.arrow:hover:not(:disabled){transform:scale(1.08);background:var(--orange);border-color:var(--orange);color:#000}
+.arrow:disabled{opacity:.3;cursor:default}
+.arrow svg{width:18px;height:18px}
+.dots{display:flex;gap:8px;align-items:center}
+.dot{
+  width:12px;height:12px;border-radius:99px;border:2px solid currentColor;background:transparent;padding:0;
+  transition:width .35s var(--ease),background .25s,border-color .25s;
+}
+.dot[aria-current="true"]{width:34px;background:var(--orange);border-color:var(--orange)}
+
+@media (max-width:520px){
+  .bar{padding:14px 18px}
+  .brand img{height:26px}
+  .nav{gap:12px}
+  .nav a{font-size:.82rem}
+  .arrow{width:40px;height:40px}
+}
+@media (prefers-reduced-motion:reduce){ .track{transition:none} }
+</style>
+<style>
+/* Home, Portfolio, Services and About */
+
+/* Home */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,5vw,72px);align-items:center}
+.hero h1{font-size:clamp(2.3rem,5vw,4.6rem);font-weight:700;line-height:1.04}
+.lead{font-size:clamp(1.05rem,1.5vw,1.25rem);max-width:34em;margin:1.4rem 0 2rem;color:#222}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.social{display:flex;gap:22px;flex-wrap:wrap;margin-top:2.4rem}
+.social a{font-weight:500;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:6px}
+.art{width:100%;max-width:520px;justify-self:center;overflow:visible}
+.art .ring{stroke-dasharray:850;stroke-dashoffset:850;animation:draw 1.3s .15s cubic-bezier(.6,0,.2,1) forwards}
+.art .bar-o,.art .tri{transform-box:fill-box;transform-origin:center;opacity:0}
+.art .bar-o{animation:rise .8s 1s cubic-bezier(.2,.9,.25,1.1) forwards}
+.art .tri{animation:pop .6s 1.35s cubic-bezier(.2,.9,.25,1.3) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes rise{from{opacity:0;transform:translateY(70px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+
+/* Portfolio */
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.head h2{font-size:clamp(2.2rem,4.6vw,3.8rem);font-weight:700}
+.head p{max-width:30em;margin-top:.7rem}
+.head p a{font-weight:600;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:4px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{
+  border:2px solid #000;background:transparent;color:#000;
+  padding:.45rem 1.05rem;border-radius:999px;font-weight:500;font-size:.95rem;transition:background .2s,color .2s,border-color .2s;
+}
+.chip:hover{background:rgba(0,0,0,.07)}
+.chip[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:#000;font-weight:600}
+.head-tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+
+/* Grid ratio dropdown */
+.layout{position:relative}
+.layout-btn{
+  display:inline-flex;align-items:center;gap:8px;border:2px solid #000;background:#fff;color:#000;
+  border-radius:999px;padding:.4rem .85rem .4rem .8rem;font-weight:600;font-size:.95rem;
+  transition:background .2s,color .2s;
+}
+.layout-btn:hover{background:rgba(0,0,0,.07)}
+.layout-btn[aria-expanded="true"]{background:#000;color:#fff}
+.layout-btn .caret{transition:transform .2s}
+.layout-btn[aria-expanded="true"] .caret{transform:rotate(180deg)}
+.layout-menu{
+  position:absolute;right:0;top:calc(100% + 8px);z-index:15;min-width:220px;
+  background:#fff;border:2px solid #000;border-radius:16px;padding:6px;
+  box-shadow:0 14px 36px rgba(0,0,0,.2);
+}
+.layout-menu button{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;
+  border-radius:10px;padding:.5rem .7rem;font-weight:500;color:#000;
+}
+.layout-menu button:hover,.layout-menu button:focus-visible{background:var(--grey)}
+.layout-menu button[aria-checked="true"]{background:var(--orange);font-weight:600}
+.ratio-icon{display:grid;place-items:center;width:26px;height:26px;flex:none}
+.ratio-icon i{display:block;border:2px solid currentColor;border-radius:3px}
+.ratio-icon.is-auto i{width:22px;height:22px;border-style:dashed}
+.ratio-icon svg{width:22px;height:22px}
+
+/* Portfolio grid: "auto" and "random" use a masonry layout, fixed ratios use an even grid */
+.grid{columns:4 230px;column-gap:22px}
+.grid.is-uniform{columns:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+.tile{display:block;width:100%;break-inside:avoid;margin:0 0 22px;text-align:left;background:none;border:0;color:#000}
+.grid.is-uniform .tile{margin:0}
+.media{overflow:hidden;border-radius:10px;background:#dcdcdc}
+.media img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.tile:hover .media img{transform:scale(1.05)}
+.grid .media{aspect-ratio:var(--ratio,auto);min-height:120px}
+/* Used by the Services page pictures */
+.m-logo{aspect-ratio:1}.m-social{aspect-ratio:4/5}.m-banner{aspect-ratio:2/1}.m-card{aspect-ratio:4/3}.m-photo{aspect-ratio:4/5}
+.cap{display:flex;flex-direction:column;padding:.6rem .15rem 0}
+.cap b{font-weight:600;font-size:1.02rem}
+.cap span{font-size:.9rem;color:#555}
+.empty{padding:3rem 0;color:#555}
+
+/* Services */
+.svc{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:clamp(24px,5vw,72px);align-items:start}
+.svc h2{font-size:clamp(2.2rem,4.6vw,3.8rem);font-weight:700;margin-bottom:1.4rem}
+.tabs{display:flex;flex-direction:column;gap:6px}
+.tab{
+  text-align:left;background:transparent;border:0;border-left:4px solid rgba(255,255,255,.22);
+  padding:.7rem 1rem;font-weight:600;font-size:1.2rem;
+  color:rgba(255,255,255,.65);transition:color .2s,border-color .2s,background .2s;
+}
+.tab:hover{color:#fff}
+.tab[aria-selected="true"]{color:#fff;border-left-color:var(--orange);background:rgba(255,255,255,.08)}
+.panel{display:grid;grid-template-columns:1fr minmax(180px,300px);gap:clamp(20px,4vw,52px);align-items:center;padding-top:.4rem}
+.panel.fade{animation:fadein .4s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.panel h3{font-size:clamp(1.7rem,3vw,2.5rem);font-weight:700;margin-bottom:.8rem}
+.panel p{max-width:32em;color:#ddd}
+.panel h4{font-size:1.1rem;font-weight:600;margin:1.4rem 0 .5rem}
+.panel li{padding:.3rem 0 .3rem 1.4rem;position:relative}
+.panel li::before{content:"";position:absolute;left:0;top:.85em;width:.65rem;height:.65rem;border-radius:50%;background:var(--orange)}
+.panel .btn{margin-top:1.6rem}
+
+/* About */
+.about{display:grid;grid-template-columns:minmax(220px,380px) 1fr;gap:clamp(28px,6vw,88px);align-items:center}
+.portrait-wrap{position:relative;width:100%}
+.portrait-wrap::before{content:"";position:absolute;inset:0;transform:translate(16px,16px);border-radius:999px 999px 14px 14px;background:var(--orange)}
+.portrait{position:relative;aspect-ratio:4/5;border-radius:999px 999px 14px 14px;overflow:hidden;background:#000;display:grid;place-items:center}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block}
+.portrait span{font-weight:800;font-size:clamp(7rem,16vw,12rem);color:var(--orange);line-height:1}
+.about h2{font-size:clamp(2.2rem,4.8vw,4rem);font-weight:700;margin-bottom:1rem}
+.about p{max-width:34em;margin-bottom:1rem;color:#222}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin:1.4rem 0 2rem}
+.skills li{border:2px solid #000;border-radius:999px;padding:.3rem 1rem;font-weight:500;font-size:.95rem}
+.about h3{font-size:1.5rem;font-weight:700;margin-bottom:.9rem}
+.contact{display:flex;flex-wrap:wrap;gap:10px}
+.contact .btn{padding:.65rem 1.2rem;font-size:.95rem}
+.foot{margin-top:2rem;font-size:.85rem;color:#555}
+
+@media (max-width:900px){
+  .hero,.about{grid-template-columns:1fr}
+  .art{max-width:320px}
+  .wrap{justify-content:flex-start}
+  .portrait-wrap{max-width:260px;margin-bottom:14px}
+  .svc{grid-template-columns:1fr}
+  .head-tools{justify-content:flex-start}
+  .layout-menu{right:auto;left:0}
+  .tabs{flex-direction:row;overflow-x:auto;gap:8px;padding-bottom:6px}
+  .tab{border-left:0;border-bottom:4px solid rgba(255,255,255,.22);white-space:nowrap;font-size:1.05rem}
+  .tab[aria-selected="true"]{border-bottom-color:var(--orange)}
+  .panel{grid-template-columns:1fr}
+  .panel .media{max-width:260px}
+}
+@media (max-width:520px){
+  .grid{columns:2 140px;column-gap:14px}
+  .grid.is-uniform{grid-template-columns:repeat(2,1fr);gap:14px}
+  .tile{margin-bottom:14px}
+  .grid.is-uniform .tile{margin:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .art .ring{animation:none;stroke-dashoffset:0}
+  .art .bar-o,.art .tri{animation:none;opacity:1}
+  .panel.fade{animation:none}
+}
+</style>
+<style>
+/* Lightbox and contact form dialogs */
+dialog{
+  border:0;border-radius:14px;padding:0;overflow:hidden;background:#fff;color:#000;
+  width:min(92vw,760px);max-height:92vh;margin:auto;
+}
+dialog::backdrop{background:rgba(0,0,0,.85)}
+.dlg-close{
+  position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;
+  background:#000;color:#fff;font-size:1.4rem;line-height:1;z-index:2;
+}
+
+.lb-art{background:#dcdcdc}
+.lb-art img{display:block;width:100%;max-height:72vh;object-fit:contain}
+.lb-cap{padding:16px 22px 20px;display:flex;flex-direction:column}
+.lb-cap strong{font-size:1.3rem;font-weight:700}
+
+#contact-dialog{width:min(92vw,560px);overflow-y:auto}
+.contact-form{padding:30px 28px 28px;display:grid;gap:16px;position:relative}
+.contact-form h2{font-size:1.8rem;font-weight:700;padding-right:40px}
+.contact-form label{display:grid;gap:6px;font-weight:500;font-size:.95rem}
+.contact-form input,.contact-form select,.contact-form textarea{
+  width:100%;padding:.75rem .9rem;border:2px solid #000;border-radius:10px;background:#fff;font-size:1rem;
+}
+.contact-form textarea{resize:vertical;min-height:120px}
+.contact-form input:focus-visible,.contact-form select:focus-visible,.contact-form textarea:focus-visible{outline:3px solid var(--orange);outline-offset:1px}
+.contact-form [aria-invalid="true"]{border-color:#c4210b}
+.err{color:#c4210b;font-size:.88rem;font-weight:500;min-height:0}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-status{font-weight:500}
+.form-status.ok{color:#0a7a3d}
+.form-status.bad{color:#c4210b}
+.contact-form .btn{justify-self:start;border:0}
+.contact-form .btn:disabled{opacity:.6;cursor:wait}
+</style>
+</head>
+
+<body data-theme="white">
+
+<header class="bar">
+  <a class="brand" href="#home" data-go="home" aria-label="Antor, home">
+    <img class="logo-b" src="images/logo-black.png" alt="antor">
+    <img class="logo-w" src="images/logo-white.png" alt="" aria-hidden="true">
+  </a>
+  <nav class="nav" aria-label="Main">
+    <a href="#home" data-go="home">Home</a>
+    <a href="#portfolio" data-go="portfolio">Portfolio</a>
+    <a href="#services" data-go="services">Services</a>
+    <a href="#about" data-go="about">About</a>
+  </nav>
+</header>
+
+<main class="viewport" id="viewport">
+  <div class="track" id="track">
+
+    <!-- HOME -->
+    <section class="slide s-home" id="s-home" data-theme="white" aria-label="Home">
+      <div class="wrap hero">
+        <div>
+          <h1 id="hero-title">I design logos, brands and graphics people remember.</h1>
+          <p class="lead" id="hero-lead">I’m Antor, a graphic designer and photographer. I make logos, social media designs, banners and business cards that help your business look sharp and get noticed.</p>
+          <div class="cta">
+            <button class="btn btn-orange" type="button" data-go="portfolio">See my work</button>
+            <button class="btn btn-line" type="button" data-contact>Contact me</button>
+          </div>
+          <ul class="social" aria-label="Find me online">
+            <li><a data-link="dribbble" target="_blank" rel="noopener">Dribbble</a></li>
+            <li><a data-link="behance" target="_blank" rel="noopener">Behance</a></li>
+            <li><a data-link="linkedin" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a data-link="instagram" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+
+        <svg class="art" viewBox="0 0 480 480" role="img" aria-label="A black ring with an orange bar, inspired by the Antor logo">
+          <g stroke="#000" stroke-opacity=".09" stroke-width="1.5" fill="none">
+            <path d="M120 20V460M240 20V460M360 20V460M20 120H460M20 240H460M20 360H460"/>
+          </g>
+          <g stroke="#000" stroke-width="2" fill="none">
+            <circle cx="40" cy="40" r="9"/><path d="M26 40H54M40 26V54"/>
+            <circle cx="440" cy="440" r="9"/><path d="M426 440H454M440 426V454"/>
+          </g>
+          <rect class="bar-o" x="352" y="92" width="46" height="312" fill="#F45C08"/>
+          <circle class="ring" cx="220" cy="250" r="135" fill="none" stroke="#000" stroke-width="46" transform="rotate(-90 220 250)"/>
+          <g class="tri">
+            <path d="M270 100L335 35V100Z" fill="#000"/>
+            <path d="M305 66L335 36V66Z" fill="#F45C08"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="slide s-portfolio" id="s-portfolio" data-theme="grey" aria-label="Portfolio" inert>
+      <div class="wrap wrap--top">
+        <div class="head">
+          <div>
+            <h2>Selected work</h2>
+            <p>Branding, social media, banners, business cards and photography. See more on <a data-link="dribbble" target="_blank" rel="noopener">Dribbble</a> and <a data-link="behance" target="_blank" rel="noopener">Behance</a>.</p>
+          </div>
+          <div class="head-tools">
+            <div class="chips" id="chips" role="group" aria-label="Filter projects"></div>
+            <div class="layout" id="layout">
+              <button class="layout-btn" id="layout-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="layout-menu" aria-label="Change grid ratio">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
+                <span id="layout-label">Auto</span>
+                <svg class="caret" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="layout-menu" id="layout-menu" role="menu" aria-label="Grid ratio" hidden></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="slide s-services" id="s-services" data-theme="black" aria-label="Services" inert>
+      <div class="wrap">
+        <div class="svc">
+          <div>
+            <h2>What I can make for you</h2>
+            <div class="tabs" id="tabs" role="tablist" aria-label="Services" data-noswipe></div>
+          </div>
+          <div class="panel" id="panel" role="tabpanel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="slide s-about" id="s-about" data-theme="white" aria-label="About" inert>
+      <div class="wrap about">
+        <div class="portrait-wrap"><div class="portrait" id="portrait"></div></div>
+        <div>
+          <h2 id="about-title">Hi, I’m Antor.</h2>
+          <div id="about-text"></div>
+          <ul class="skills" id="skills" aria-label="Skills"></ul>
+          <h3>Let’s work together</h3>
+          <div class="contact">
+            <button class="btn btn-orange" type="button" data-contact>Send a message</button>
+            <a class="btn btn-line" id="emailBtn" hidden>Email me</a>
+            <a class="btn btn-line" data-link="dribbble" target="_blank" rel="noopener">Dribbble</a>
+            <a class="btn btn-line" data-link="behance" target="_blank" rel="noopener">Behance</a>
+            <a class="btn btn-line" data-link="linkedin" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn btn-line" data-link="instagram" target="_blank" rel="noopener">Instagram</a>
+          </div>
+          <p class="foot">© 2026 Antor. All rights reserved.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div class="controls" aria-label="Slide controls">
+  <button class="arrow" id="prev" type="button" aria-label="Previous page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <div class="dots" id="dots"></div>
+  <button class="arrow" id="next" type="button" aria-label="Next page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+</div>
+
+<dialog id="lightbox" aria-label="Project preview">
+  <button class="dlg-close" type="button" data-close aria-label="Close preview">&times;</button>
+  <div class="lb-art" id="lb-art"></div>
+  <div class="lb-cap"><strong id="lb-title"></strong><span class="muted" id="lb-cat"></span></div>
+</dialog>
+
+<dialog id="contact-dialog" aria-labelledby="contact-title">
+  <form class="contact-form" id="contact-form" novalidate>
+    <button class="dlg-close" type="button" data-close aria-label="Close form">&times;</button>
+    <h2 id="contact-title">Let’s talk about your project</h2>
+    <p class="muted">Tell me what you need and I’ll reply by email.</p>
+    <label>Your name
+      <input name="name" autocomplete="name" maxlength="80" required>
+      <span class="err" data-err="name"></span>
+    </label>
+    <label>Email
+      <input name="email" type="email" autocomplete="email" maxlength="120" required>
+      <span class="err" data-err="email"></span>
+    </label>
+    <label>What do you need?
+      <select name="service" id="contact-service"></select>
+    </label>
+    <label>Message
+      <textarea name="message" rows="5" maxlength="2000" required></textarea>
+      <span class="err" data-err="message"></span>
+    </label>
+    <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <p class="form-status" id="contact-status" role="status"></p>
+    <button class="btn btn-orange" type="submit">Send message</button>
+  </form>
+</dialog>
+<script>
+// ---- data/content.js ----
+window.ANTOR_CONTENT = {
+  "categories": [
+    {
+      "key": "logo",
+      "label": "Logo & branding"
+    },
+    {
+      "key": "social",
+      "label": "Social media"
+    },
+    {
+      "key": "banner",
+      "label": "Banners"
+    },
+    {
+      "key": "card",
+      "label": "Business cards"
+    },
+    {
+      "key": "photo",
+      "label": "Photography"
+    }
+  ],
+  "settings": {
+    "name": "Antor",
+    "role": "Graphic designer & photographer",
+    "headline": "I design logos, brands and graphics people remember.",
+    "lead": "I’m Antor, a graphic designer and photographer. I make logos, social media designs, banners and business cards that help your business look sharp and get noticed.",
+    "aboutTitle": "Hi, I’m Antor.",
+    "aboutParagraphs": [
+      "I’m a graphic designer who loves clean ideas and bold visuals. I help businesses and creators look professional with logos, social media designs, banners and business cards.",
+      "When I’m not designing, I’m out taking photos. I like work that is simple, clear and built to last."
+    ],
+    "skills": [
+      "Logo & branding",
+      "Social media design",
+      "Banner design",
+      "Business card design",
+      "Photography"
+    ],
+    "email": "",
+    "photo": "images/antor.jpg",
+    "links": {
+      "dribbble": "https://dribbble.com/antor_",
+      "behance": "https://www.behance.net/antor_",
+      "linkedin": "https://www.linkedin.com/in/mahmudullah-antor-6929822b5",
+      "instagram": "https://www.instagram.com/antor_photography/"
+    }
+  },
+  "services": [
+    {
+      "id": "s-logo",
+      "name": "Logo & branding",
+      "text": "A logo is where a brand starts. I design the mark, colors and typography so your business looks the same and feels trusted everywhere it appears.",
+      "items": [
+        "Primary logo and variations",
+        "Color palette and fonts",
+        "Brand guideline",
+        "Files ready for print and web"
+      ],
+      "cta": "Start a logo project",
+      "link": "",
+      "image": "images/work-01.jpg",
+      "category": "logo"
+    },
+    {
+      "id": "s-social",
+      "name": "Social media design",
+      "text": "Posts, stories and covers that match your brand and stop the scroll. Designed in the right size for each platform.",
+      "items": [
+        "Post and story designs",
+        "Page covers and profile images",
+        "Reusable templates",
+        "Consistent look across platforms"
+      ],
+      "cta": "Plan my social media",
+      "link": "",
+      "image": "images/work-02.jpg",
+      "category": "social"
+    },
+    {
+      "id": "s-banner",
+      "name": "Banner design",
+      "text": "Clear, eye-catching banners for websites, ads, events and print. Short message, strong visual.",
+      "items": [
+        "Web and ad banners",
+        "Facebook and YouTube covers",
+        "Event and print banners",
+        "Sized for where you will use it"
+      ],
+      "cta": "Order a banner",
+      "link": "",
+      "image": "images/work-03.jpg",
+      "category": "banner"
+    },
+    {
+      "id": "s-card",
+      "name": "Business card design",
+      "text": "A business card that people keep. Simple layouts that carry your logo and details with confidence.",
+      "items": [
+        "Front and back layout",
+        "Print-ready files",
+        "Matches your brand colors",
+        "Digital version if you need it"
+      ],
+      "cta": "Design my card",
+      "link": "",
+      "image": "images/work-04.jpg",
+      "category": "card"
+    },
+    {
+      "id": "s-other",
+      "name": "Other graphics work",
+      "text": "If it needs to be designed, I can help. Flyers, posters, brochures, menus, labels and more.",
+      "items": [
+        "Flyers and posters",
+        "Brochures and menus",
+        "Packaging and labels",
+        "Anything graphics-related"
+      ],
+      "cta": "Tell me your idea",
+      "link": "",
+      "image": "images/work-08.jpg",
+      "category": "banner"
+    },
+    {
+      "id": "s-photo",
+      "name": "Photography",
+      "text": "I also take photos. Have a look at my Instagram to see my style and get in touch for a shoot.",
+      "items": [
+        "Product and lifestyle photos",
+        "Portraits",
+        "Photo editing and color work"
+      ],
+      "cta": "See my photography",
+      "link": "instagram",
+      "image": "images/work-06.jpg",
+      "category": "photo"
+    }
+  ],
+  "projects": [
+    {
+      "id": "p-01",
+      "title": "Logo design",
+      "category": "logo",
+      "image": "images/work-01.jpg"
+    },
+    {
+      "id": "p-02",
+      "title": "Social media post",
+      "category": "social",
+      "image": "images/work-02.jpg"
+    },
+    {
+      "id": "p-03",
+      "title": "Web banner",
+      "category": "banner",
+      "image": "images/work-03.jpg"
+    },
+    {
+      "id": "p-04",
+      "title": "Business card",
+      "category": "card",
+      "image": "images/work-04.jpg"
+    },
+    {
+      "id": "p-05",
+      "title": "Brand identity",
+      "category": "logo",
+      "image": "images/work-05.jpg"
+    },
+    {
+      "id": "p-06",
+      "title": "Landscape photo",
+      "category": "photo",
+      "image": "images/work-06.jpg"
+    },
+    {
+      "id": "p-07",
+      "title": "Story design",
+      "category": "social",
+      "image": "images/work-07.jpg"
+    },
+    {
+      "id": "p-08",
+      "title": "Event banner",
+      "category": "banner",
+      "image": "images/work-08.jpg"
+    },
+    {
+      "id": "p-09",
+      "title": "Business card set",
+      "category": "card",
+      "image": "images/work-09.jpg"
+    },
+    {
+      "id": "p-10",
+      "title": "Portrait photo",
+      "category": "photo",
+      "image": "images/work-10.jpg"
+    }
+  ]
+};
+
+// ---- assets/js/dom.js ----
+(function (A) {
+'use strict';
+
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+/** Builds an element safely: text is always inserted as text, never as HTML. */
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [key, value] of Object.entries(attrs || {})) {
+    if (value == null || value === false) continue;
+    if (key === 'class') node.className = value;
+    else if (key.startsWith('on') && typeof value === 'function') node.addEventListener(key.slice(2), value);
+    else node.setAttribute(key, value === true ? '' : value);
+  }
+  for (const child of children.flat()) {
+    if (child == null || child === false) continue;
+    node.append(child.nodeType ? child : document.createTextNode(String(child)));
+  }
+  return node;
+}
+
+/** Puts an image into a container; if the file is missing the container just stays grey. */
+function putImage(container, src, alt) {
+  container.replaceChildren();
+  if (!src) return;
+  const img = new Image();
+  img.alt = alt;
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.addEventListener('error', () => img.remove());
+  img.src = src;
+  container.append(img);
+}
+
+A.dom = { $, $$, el, putImage };
+})(window.Antor = window.Antor || {});
+
+// ---- assets/js/api.js ----
+(function (A) {
+'use strict';
+
+/**
+ * Loads site content from the Node backend. If the backend is not available
+ * (GitHub Pages, or opening index.html directly) it uses data/content.js / content.json.
+ */
+async function loadContent() {
+  // Opened by double-clicking index.html (file://) or hosted without a backend: use the bundled copy.
+  const bundled = () => (window.ANTOR_CONTENT ? { content: window.ANTOR_CONTENT, live: false } : null);
+  // Single-file build: the content is embedded, so no backend request is needed.
+  if (location.protocol === 'file:' || window.ANTOR_CONTENT) {
+    const local = bundled();
+    if (local) return local;
+    throw new Error('data/content.js is missing. Run "npm run export-static".');
+  }
+  try {
+    const res = await fetch('api/content', { headers: { Accept: 'application/json' } });
+    if (!res.ok || !(res.headers.get('content-type') || '').includes('json')) throw new Error('no backend');
+    return { content: await res.json(), live: true };
+  } catch {
+    const local = bundled();
+    if (local) return local;
+    const res = await fetch('data/content.json');
+    if (!res.ok) throw new Error('Could not load the site content.');
+    return { content: await res.json(), live: false };
+  }
+}
+
+async function sendContact(payload) {
+  const res = await fetch('api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const error = new Error(data.error || 'Could not send your message.');
+    error.errors = data.errors || {};
+    throw error;
+  }
+  return data;
+}
+
+A.api = { loadContent, sendContact };
+})(window.Antor = window.Antor || {});
+
+// ---- assets/js/slider.js ----
+(function (A) {
+'use strict';
+const { $, $$ } = A.dom;
+
+
+const dialogOpen = () => Boolean(document.querySelector('dialog[open]'));
+const titleCase = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+
+/** Horizontal full-screen slider: nav links, arrows, dots, keyboard, wheel, swipe and #hash links. */
+function initSlider() {
+  const track = $('#track');
+  const viewport = $('#viewport');
+  const slides = $$('.slide');
+  const names = slides.map((slide) => slide.id.replace('s-', ''));
+  const prev = $('#prev');
+  const next = $('#next');
+  const dots = $('#dots');
+  let index = 0;
+  let locked = false;
+
+  names.forEach((name, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot';
+    dot.type = 'button';
+    dot.title = titleCase(name);
+    dot.setAttribute('aria-label', `Go to ${name}`);
+    dot.addEventListener('click', () => go(i));
+    dots.append(dot);
+  });
+
+  function go(target, instant = false) {
+    index = Math.max(0, Math.min(slides.length - 1, target));
+    if (instant) track.style.transition = 'none';
+    track.style.transform = `translateX(${-index * 100}%)`;
+    if (instant) {
+      void track.offsetWidth;
+      track.style.transition = '';
+    }
+
+    slides.forEach((slide, i) => (i === index ? slide.removeAttribute('inert') : slide.setAttribute('inert', '')));
+    document.body.dataset.theme = slides[index].dataset.theme;
+    document.querySelector('meta[name="theme-color"]').content = getComputedStyle(slides[index]).backgroundColor;
+
+    $$('.nav a').forEach((link) => {
+      if (link.dataset.go === names[index]) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+    $$('.dot').forEach((dot, i) => dot.setAttribute('aria-current', String(i === index)));
+    prev.disabled = index === 0;
+    next.disabled = index === slides.length - 1;
+
+    history.replaceState(null, '', '#' + names[index]);
+    document.title = index === 0 ? document.body.dataset.homeTitle || document.title : `${titleCase(names[index])} | Antor`;
+  }
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-go]');
+    if (!trigger) return;
+    event.preventDefault();
+    const target = names.indexOf(trigger.dataset.go);
+    if (target > -1) {
+      go(target);
+      slides[target].scrollTop = 0;
+    }
+  });
+  prev.addEventListener('click', () => go(index - 1));
+  next.addEventListener('click', () => go(index + 1));
+
+  document.addEventListener('keydown', (event) => {
+    if (dialogOpen() || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (/INPUT|TEXTAREA|SELECT/.test(event.target.tagName)) return;
+    if (event.key === 'ArrowRight' || event.key === 'PageDown') go(index + 1);
+    else if (event.key === 'ArrowLeft' || event.key === 'PageUp') go(index - 1);
+    else if (event.key === 'Home' && event.target === document.body) go(0);
+    else if (event.key === 'End' && event.target === document.body) go(slides.length - 1);
+  });
+
+  viewport.addEventListener('wheel', (event) => {
+    if (dialogOpen() || locked) return;
+    const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
+    const delta = horizontal ? event.deltaX : event.deltaY;
+    if (Math.abs(delta) < 25) return;
+    const slide = slides[index];
+    if (!horizontal && slide.scrollHeight > slide.clientHeight + 4) return; // tall content scrolls normally
+    locked = true;
+    setTimeout(() => { locked = false; }, 850);
+    go(index + (delta > 0 ? 1 : -1));
+  }, { passive: true });
+
+  let startX = 0;
+  let startY = 0;
+  let startTarget = null;
+  viewport.addEventListener('touchstart', (event) => {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+    startTarget = event.target;
+  }, { passive: true });
+  viewport.addEventListener('touchend', (event) => {
+    if (startTarget?.closest('[data-noswipe]')) return;
+    const dx = event.changedTouches[0].clientX - startX;
+    const dy = event.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5) go(index + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  // Stops the browser from shifting the hidden container when it scrolls to a #hash.
+  viewport.addEventListener('scroll', () => { viewport.scrollLeft = 0; viewport.scrollTop = 0; });
+  window.addEventListener('hashchange', () => {
+    const target = names.indexOf(location.hash.slice(1));
+    if (target > -1 && target !== index) go(target);
+  });
+
+  document.body.dataset.homeTitle = document.title;
+  const start = names.indexOf(location.hash.slice(1));
+  go(start > -1 ? start : 0, true);
+  return { go };
+}
+
+A.slider = { initSlider };
+})(window.Antor = window.Antor || {});
+
+// ---- assets/js/portfolio.js ----
+(function (A) {
+'use strict';
+const { $, el, putImage } = A.dom;
+
+// Grid ratio choices. "auto" keeps every image's own shape, "random" mixes shapes.
+const LAYOUTS = [
+  { key: 'auto', label: 'Auto (original)', short: 'Auto' },
+  { key: 'random', label: 'Random', short: 'Random' },
+  { key: '1/1', label: '1:1 Square', short: '1:1', w: 1, h: 1 },
+  { key: '4/3', label: '4:3 Landscape', short: '4:3', w: 4, h: 3 },
+  { key: '3/4', label: '3:4 Portrait', short: '3:4', w: 3, h: 4 },
+  { key: '3/2', label: '3:2 Landscape', short: '3:2', w: 3, h: 2 },
+  { key: '2/3', label: '2:3 Portrait', short: '2:3', w: 2, h: 3 },
+  { key: '4/5', label: '4:5 Portrait', short: '4:5', w: 4, h: 5 },
+  { key: '16/9', label: '16:9 Wide', short: '16:9', w: 16, h: 9 },
+  { key: '9/16', label: '9:16 Tall', short: '9:16', w: 9, h: 16 }
+];
+const RANDOM_POOL = LAYOUTS.filter((l) => l.w && ['1/1', '4/3', '3/4', '3/2', '2/3', '4/5', '16/9'].includes(l.key));
+const STORAGE_KEY = 'antor.gridRatio';
+
+const RANDOM_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="5.5" height="9" rx="1.2"/><rect x="9.5" y="4" width="5.5" height="16" rx="1.2"/><rect x="16" y="4" width="5" height="6" rx="1.2"/></svg>';
+
+function readSaved() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return LAYOUTS.some((l) => l.key === saved) ? saved : 'auto';
+  } catch { return 'auto'; }
+}
+function save(key) {
+  try { localStorage.setItem(STORAGE_KEY, key); } catch { /* private mode: ignore */ }
+}
+
+function layoutIcon(layout) {
+  const icon = el('span', { class: 'ratio-icon', 'aria-hidden': 'true' });
+  if (layout.key === 'auto') {
+    icon.classList.add('is-auto');
+    icon.append(el('i'));
+  } else if (layout.key === 'random') {
+    icon.innerHTML = RANDOM_ICON; // static, trusted markup
+  } else {
+    const box = el('i');
+    const scale = 22 / Math.max(layout.w, layout.h);
+    box.style.width = `${Math.round(layout.w * scale)}px`;
+    box.style.height = `${Math.round(layout.h * scale)}px`;
+    icon.append(box);
+  }
+  return icon;
+}
+
+function renderPortfolio({ categories, projects }) {
+  const labels = new Map(categories.map((c) => [c.key, c.label]));
+  const chips = $('#chips');
+  const grid = $('#grid');
+  const lightbox = $('#lightbox');
+  const layoutBox = $('#layout');
+  const layoutBtn = $('#layout-btn');
+  const layoutMenu = $('#layout-menu');
+  const layoutLabel = $('#layout-label');
+
+  let filter = 'all';
+  let layout = readSaved();
+  let randomRatios = new Map();
+
+  const usedCategories = categories.filter((c) => projects.some((p) => p.category === c.key));
+
+  function shuffleRatios() {
+    randomRatios = new Map(projects.map((p) => [p.id, RANDOM_POOL[Math.floor(Math.random() * RANDOM_POOL.length)]]));
+  }
+
+  function drawChips() {
+    chips.replaceChildren(
+      ...[{ key: 'all', label: 'All' }, ...usedCategories].map((c) =>
+        el('button', {
+          class: 'chip', type: 'button', 'aria-pressed': String(c.key === filter),
+          onclick: () => { filter = c.key; drawChips(); drawGrid(); }
+        }, c.label))
+    );
+  }
+
+  function drawGrid() {
+    const shown = projects.filter((p) => filter === 'all' || p.category === filter);
+    const fixed = LAYOUTS.find((l) => l.key === layout && l.w);
+    grid.classList.toggle('is-uniform', Boolean(fixed));
+    if (fixed) grid.style.setProperty('--ratio', `${fixed.w} / ${fixed.h}`);
+    else grid.style.removeProperty('--ratio');
+
+    if (!shown.length) {
+      grid.replaceChildren(el('p', { class: 'empty' }, 'Projects are coming soon.'));
+      return;
+    }
+    grid.replaceChildren(...shown.map((project) => {
+      const media = el('div', { class: 'media' });
+      if (layout === 'random') {
+        const r = randomRatios.get(project.id) || RANDOM_POOL[0];
+        media.style.setProperty('--ratio', `${r.w} / ${r.h}`);
+      }
+      putImage(media, project.image, project.title);
+      return el('button', {
+        class: 'tile', type: 'button', 'aria-label': `Open ${project.title}`,
+        onclick: () => open(project)
+      }, media, el('div', { class: 'cap' }, el('b', {}, project.title), el('span', {}, labels.get(project.category) || '')));
+    }));
+  }
+
+  // ----- ratio dropdown -----
+  function drawMenu() {
+    layoutMenu.replaceChildren(...LAYOUTS.map((item) =>
+      el('button', {
+        type: 'button', role: 'menuitemradio', 'aria-checked': String(item.key === layout),
+        onclick: () => choose(item.key)
+      }, layoutIcon(item), item.label)));
+    layoutLabel.textContent = LAYOUTS.find((l) => l.key === layout).short;
+  }
+
+  function openMenu() {
+    layoutMenu.hidden = false;
+    layoutBtn.setAttribute('aria-expanded', 'true');
+    (layoutMenu.querySelector('[aria-checked="true"]') || layoutMenu.firstElementChild).focus();
+  }
+  function closeMenu(returnFocus = false) {
+    layoutMenu.hidden = true;
+    layoutBtn.setAttribute('aria-expanded', 'false');
+    if (returnFocus) layoutBtn.focus();
+  }
+  function choose(key) {
+    layout = key;
+    if (key === 'random') shuffleRatios(); // picking Random again reshuffles
+    save(key);
+    drawMenu();
+    drawGrid();
+    closeMenu(true);
+  }
+
+  layoutBtn.addEventListener('click', () => (layoutMenu.hidden ? openMenu() : closeMenu()));
+  document.addEventListener('click', (event) => {
+    if (!layoutMenu.hidden && !layoutBox.contains(event.target)) closeMenu();
+  });
+  layoutMenu.addEventListener('keydown', (event) => {
+    const items = [...layoutMenu.querySelectorAll('button')];
+    const i = items.indexOf(document.activeElement);
+    if (event.key === 'Escape') { event.preventDefault(); closeMenu(true); }
+    else if (event.key === 'ArrowDown') { event.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (event.key === 'ArrowUp') { event.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+    else if (event.key === 'Tab') closeMenu();
+    if (event.key.startsWith('Arrow')) event.stopPropagation(); // do not slide pages while using the menu
+  });
+
+  function open(project) {
+    putImage($('#lb-art'), project.image, project.title);
+    $('#lb-title').textContent = project.title;
+    $('#lb-cat').textContent = labels.get(project.category) || '';
+    lightbox.showModal();
+  }
+
+  lightbox.addEventListener('click', (event) => { if (event.target === lightbox) lightbox.close(); });
+  if (layout === 'random') shuffleRatios();
+  drawChips();
+  drawMenu();
+  drawGrid();
+}
+
+A.portfolio = { renderPortfolio };
+})(window.Antor = window.Antor || {});
+
+// ---- assets/js/services.js ----
+(function (A) {
+'use strict';
+const { $, el, putImage } = A.dom;
+
+
+function renderServices({ services, settings }) {
+  const tabs = $('#tabs');
+  const panel = $('#panel');
+  let selected = 0;
+
+  function drawTabs() {
+    tabs.replaceChildren(...services.map((service, i) =>
+      el('button', {
+        class: 'tab', type: 'button', role: 'tab', 'aria-selected': String(i === selected),
+        onclick: () => { selected = i; drawTabs(); drawPanel(true); }
+      }, service.name)));
+  }
+
+  function drawPanel(animate) {
+    const service = services[selected];
+    if (!service) return;
+    const href = service.link && settings.links[service.link];
+    const action = href
+      ? el('a', { class: 'btn btn-orange', href, target: '_blank', rel: 'noopener' }, service.cta)
+      : el('button', { class: 'btn btn-orange', type: 'button', 'data-contact': '', 'data-service': service.name }, service.cta);
+
+    const media = el('div', { class: `media m-${service.category}` });
+    putImage(media, service.image, service.name);
+
+    panel.replaceChildren(
+      el('div', {},
+        el('h3', {}, service.name),
+        el('p', {}, service.text),
+        service.items.length ? el('h4', {}, 'What you get') : null,
+        el('ul', {}, service.items.map((item) => el('li', {}, item))),
+        action),
+      service.image ? media : null
+    );
+    if (animate) {
+      panel.classList.remove('fade');
+      void panel.offsetWidth;
+      panel.classList.add('fade');
+    }
+  }
+
+  drawTabs();
+  drawPanel(false);
+}
+
+A.services = { renderServices };
+})(window.Antor = window.Antor || {});
+
+// ---- assets/js/about.js ----
+(function (A) {
+'use strict';
+const { $, $$, el } = A.dom;
+
+
+/** Fills the text, photo and links of the page from the saved site settings. */
+function applySettings({ settings }) {
+  $('#hero-title').textContent = settings.headline;
+  $('#hero-lead').textContent = settings.lead;
+  $('#about-title').textContent = settings.aboutTitle;
+  $('#about-text').replaceChildren(...settings.aboutParagraphs.map((text) => el('p', {}, text)));
+  $('#skills').replaceChildren(...settings.skills.map((skill) => el('li', {}, skill)));
+
+  $$('[data-link]').forEach((a) => {
+    const href = settings.links[a.dataset.link];
+    if (href) a.href = href;
+    else a.closest('li')?.remove() ?? a.remove();
+  });
+
+  const email = $('#emailBtn');
+  if (settings.email) {
+    email.href = `mailto:${settings.email}`;
+    email.hidden = false;
+  }
+
+  const portrait = $('#portrait');
+  const fallback = () => portrait.replaceChildren(el('span', { 'aria-hidden': 'true' }, (settings.name || 'A').charAt(0).toUpperCase()));
+  if (settings.photo) {
+    const img = new Image();
+    img.alt = `Portrait of ${settings.name}`;
+    img.addEventListener('error', fallback);
+    img.src = settings.photo;
+    portrait.replaceChildren(img);
+  } else {
+    fallback();
+  }
+}
+
+A.about = { applySettings };
+})(window.Antor = window.Antor || {});
+
+// ---- assets/js/contact.js ----
+(function (A) {
+'use strict';
+const { $, $$, el } = A.dom;
+const { sendContact } = A.api;
+
+
+/** Contact dialog. Sends to the backend; without a backend it opens the visitor's email app instead. */
+function initContact() {
+  const dialog = $('#contact-dialog');
+  const form = $('#contact-form');
+  const select = $('#contact-service');
+  const status = $('#contact-status');
+  const submit = $('button[type="submit"]', form);
+  let live = true;
+  let settings = { email: '', links: {} };
+
+  document.addEventListener('click', (event) => {
+    const close = event.target.closest('[data-close]');
+    if (close) close.closest('dialog').close();
+  });
+  dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+
+  function setStatus(message, kind = '') {
+    status.textContent = message;
+    status.className = `form-status ${kind}`.trim();
+  }
+  function showErrors(errors = {}) {
+    $$('[data-err]', form).forEach((node) => {
+      const message = errors[node.dataset.err] || '';
+      node.textContent = message;
+      form.elements[node.dataset.err]?.setAttribute('aria-invalid', String(Boolean(message)));
+    });
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    showErrors();
+    const data = Object.fromEntries(new FormData(form));
+
+    if (!live) {
+      // Static hosting: no server to receive the message.
+      if (settings.email) {
+        const subject = encodeURIComponent(`Project enquiry: ${data.service}`);
+        const body = encodeURIComponent(`${data.message}\n\n${data.name}`);
+        window.location.href = `mailto:${settings.email}?subject=${subject}&body=${body}`;
+      } else if (settings.links.instagram) {
+        window.open(settings.links.instagram, '_blank', 'noopener');
+      }
+      return;
+    }
+
+    submit.disabled = true;
+    setStatus('Sending…');
+    try {
+      await sendContact(data);
+      form.reset();
+      setStatus('Thank you! Your message was sent. I’ll reply by email soon.', 'ok');
+    } catch (error) {
+      showErrors(error.errors);
+      setStatus(error.message, 'bad');
+    } finally {
+      submit.disabled = false;
+    }
+  });
+
+  return {
+    setup(content, isLive) {
+      live = isLive;
+      settings = content.settings;
+      select.replaceChildren(
+        el('option', { value: 'General question' }, 'General question'),
+        ...content.services.map((service) => el('option', { value: service.name }, service.name))
+      );
+    },
+    open(service = '') {
+      showErrors();
+      setStatus('');
+      if (service && [...select.options].some((option) => option.value === service)) select.value = service;
+      dialog.showModal();
+      form.elements.name.focus();
+    }
+  };
+}
+
+A.contact = { initContact };
+})(window.Antor = window.Antor || {});
+
+// ---- assets/js/app.js ----
+(async function (A) {
+  'use strict';
+
+  // The slider starts first so navigation works even while content is loading.
+  A.slider.initSlider();
+  const contact = A.contact.initContact();
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-contact]');
+    if (!trigger) return;
+    event.preventDefault();
+    contact.open(trigger.dataset.service || '');
+  });
+
+  try {
+    const { content, live } = await A.api.loadContent();
+    A.about.applySettings(content);
+    A.portfolio.renderPortfolio(content);
+    A.services.renderServices(content);
+    contact.setup(content, live);
+  } catch (error) {
+    console.error(error);
+  }
+})(window.Antor = window.Antor || {});
+</script>
+</body>
+</html>
